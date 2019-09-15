@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heike.dao.InsertDao">
+	<insert id="insertAdmin" parameterType="Admin">
+		insert into t_admin values(default,#{admin_username},#{admin_password},#{admin_name})
+	</insert>
+	<insert id="insertT">
+		insert into t_teacher values(default,#{t_name},#{t_houseid},#{t_username},#{t_password},#{t_no})
+	</insert>
+	
+	<insert id="insertS">
+		insert into t_stu values(default,#{stu_name},#{stu_sex},#{stu_houseid},#{stu_no},#{stu_username},#{stu_password},"#","1",#{stu_hobby})
+	</insert>
+	
+	<insert id="insertH">
+		insert into t_house values(default,#{house_name})
+	</insert>
+	
+	<insert id="addtask" parameterType="Map">
+		insert into t_task values(default,#{info},#{tid},#{task_time},#{sid})
+	</insert>
+	<insert id="addAudit" parameterType="Map">
+		insert into t_audit values(default,#{stu_id},#{photo_address})
+	</insert>
+</mapper> 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heike.dao.UpdateDao">
+	<update id="updateT" parameterType="Teacher">
+		update t_teacher set t_name=#{t_name},t_houseid=#{t_houseid},t_username=#{t_username},t_password=#{t_password},t_no=#{t_no} where t_id=#{t_id}
+	</update>
+	<update id="updateS" parameterType="Students">
+		update t_stu set stu_name=#{stu_name},stu_sex=#{stu_sex},stu_houseid=#{stu_houseid},stu_no=#{stu_no},stu_username=#{stu_username},stu_password=#{stu_password},stu_photo="$",stu_audit=1 where stu_id=#{stu_id}
+	</update>
+	<update id="updateH" parameterType="House">
+		update t_house set house_name=#{house_name} where house_id=#{house_id}
+	</update>
+	<update id="updateAudit" parameterType="Integer">
+		update t_stu set stu_audit=1 where stu_id=#{s_id}
+	</update>
+</mapper> 

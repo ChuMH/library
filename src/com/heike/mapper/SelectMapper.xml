@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heike.dao.SelectDao">
+	<select id="selectH" resultType="House">
+		select * from t_house
+	</select>
+	<select id="selectTById" parameterType="Integer" resultType="Teacher">
+		select * from t_teacher where t_id=#{t_id}
+	</select>
+	<select id="selectSById" parameterType="Integer" resultType="Students">
+		select * from t_stu where stu_id=#{stu_id}
+	</select>
+	
+	<resultMap type="Teacher" id="TeacherMap">
+		<id property="t_id" javaType="Integer" column="t_id"/>
+		<result property="t_name" javaType="String" column="t_name"/>
+		<result property="t_houseid" javaType="Integer" column="t_houseid"/>
+		<result property="t_username" javaType="String" column="t_username"/>
+		<result property="t_password" javaType="String" column="t_password"/>
+	 	<result property="t_no" javaType="Integer" column="t_no"/>
+		<association property="house" column="t_houseid" select="com.heike.dao.SelectDao.selectHById"></association>
+	</resultMap>
+	<resultMap type="Students" id="StudentMap">
+		<id property="stu_id" javaType="Integer" column="stu_id"/>
+		<result property="stu_name" javaType="String" column="stu_name"/>
+		<result property="stu_houseid" javaType="Integer" column="stu_houseid"/>
+		<result property="stu_no" javaType="Integer" column="stu_no"/>
+		<result property="stu_username" javaType="String" column="stu_username"/>
+		<result property="stu_password" javaType="String" column="stu_password"/>
+		<result property="stu_photo" javaType="String" column="stu_photo"/>
+	
+		<result property="stu_audit" javaType="Integer" column="stu_audit"/>
+		<association property="house" column="stu_houseid" select="com.heike.dao.SelectDao.selectHById"></association>
+	</resultMap>
+	<select id="selectAllTeacher" parameterType="Map" resultMap="TeacherMap">
+		select * from t_teacher limit #{startlocation},#{length}
+	</select>
+
+	<select id="getTotalTeacherCount" resultType="Integer">
+		select count(*)
+		from t_teacher
+	</select>
+
+    <select id="selectAllStudents" parameterType="Map" resultMap="StudentMap">
+		select * from t_stu where stu_audit = 1 limit #{startlocation2},#{length2}
+	</select>
+
+ <select id="selectBadStudents" parameterType="Map" resultMap="StudentMap">
+		select * from t_stu where stu_audit != 1 limit #{startlocation3},#{length3}
+	</select>
+	
+	
+	
+	<resultMap type="Task" id="TaskMap">
+		<id property="task_id" javaType="Integer" column="task_id"/>
+		<result property="information" javaType="String" column="task_information"/>
+		<association property="teacher" column="task_tid" select="com.heike.dao.SelectDao.selectTeaById"></association>
+	</resultMap>
+	<select id="selectAllTask" parameterType="Map" resultMap="TaskMap">
+		select * from t_task where task_sid=#{sid}  limit #{startlocation},#{length}
+	</select>
+	
+	<select id="selectTeaById" parameterType="Integer" resultType="Teacher">
+		select * from t_teacher where t_id=#{tid}
+	</select>
+	
+	
+<select id="getBadStudentCount" resultType="Integer">
+		select count(*)
+		from t_stu where stu_audit !=1
+	</select>
+
+	<select id="getTotalStudentCount" resultType="Integer">
+		select count(*)
+		from t_stu where stu_audit = 1
+	</select>
+   <select id="showAllH" resultType="House">
+		select *
+		from t_house 
+	</select>
+<!-- 	<select id="showMyS" resultType="Students">
+		select * from t_stu where stu_houseid = #{} 
+	</select> -->
+	
+	<select id="selectHById" resultType="House">
+	select * from t_house where house_id=#{h_id}
+	</select>
+
+	<select id="searchT" parameterType="Integer" resultMap="TeacherMap">
+		select * from t_teacher where t_no=#{t_no}
+	</select>
+	<!-- <select id="searchS" parameterType="Integer" resultMap="StudentMap">
+		select * from t_stu where stu_no=#{stu_no} and stu_audit=1
+	</select> -->
+	<select id="searchS" parameterType="String" resultMap="StudentMap">
+		select * from t_stu where stu_audit=1
+		<if test="search != null and search != ''">
+			AND CONCAT(stu_name, stu_sex,stu_no,stu_hobby) LIKE CONCAT('%',#{search},'%')
+        </if>
+	</select>
+	<select id="getHstudentCount" resultType="Integer">
+		select count(*)
+		from t_stu where stu_audit = 1 and stu_houseid=#{houseid}
+	</select>
+	<select id="selectHStudents" parameterType="Map" resultMap="StudentMap">
+		select * from t_stu where stu_audit = 1 and stu_houseid=#{houseid} limit #{startlocation2},#{length2}
+	</select>
+	<select id="getTotalTask" resultType="Integer">
+		select count(*) from t_task where task_sid=#{stu_id}
+	</select>
+	
+	<select id="selectAdmin" resultType="Admin">
+		select * from t_admin
+	</select>
+	
+	<select id="selectTeacher" resultType="Teacher">
+		select * from t_teacher
+	</select>
+	<select id="selectStudent" resultType="Students">
+		select * from t_stu
+	</select>
+</mapper> 
